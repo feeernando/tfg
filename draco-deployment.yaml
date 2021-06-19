@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: draco
+  name: draco
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: draco
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/fer_fiware: "true"
+        io.kompose.service: draco
+    spec:
+      containers:
+        - env:
+            - name: NIFI_WEB_HTTP_PORT
+              value: "9090"
+          image: ging/fiware-draco
+          name: draco
+          ports:
+            - containerPort: 9090
+            - containerPort: 5050
+          resources: {}
+      restartPolicy: Always
+status: {}

@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/fer_fiware: "true"
+        io.kompose.service: web
+    spec:
+      containers:
+        - args:
+            - bash
+            - -c
+            - sh /entities/createPredictionEntities.sh && sh /entities/subscribeReqPredictionTicket.sh && sh /entities/subscribeResPredictionTicket.sh && npm start
+          env:
+            - name: MONGO_URI
+              value: mongodb://root:example@mongo:27017/sth_test?authSource=admin
+            - name: URL_CB
+              value: http://orion:1026/v2/entities/ReqTicketPrediction1/attrs
+          image: web
+          name: web
+          ports:
+            - containerPort: 3000
+          resources: {}
+          volumeMounts:
+            - mountPath: /entities
+              name: web-claim0
+      restartPolicy: Always
+      volumes:
+        - name: web-claim0
+          persistentVolumeClaim:
+            claimName: web-claim0
+status: {}

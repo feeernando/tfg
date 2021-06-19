@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: maven
+  name: maven
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: maven
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/fer_fiware: "true"
+        io.kompose.service: maven
+    spec:
+      containers:
+        - env:
+            - name: SPARK_MASTER
+              value: spark-master:7077
+          image: ging/maven
+          name: maven
+          ports:
+            - containerPort: 8092
+          resources: {}
+          volumeMounts:
+            - mountPath: /prediction-job
+              name: maven-claim0
+      restartPolicy: Always
+      volumes:
+        - name: maven-claim0
+          persistentVolumeClaim:
+            claimName: maven-claim0
+status: {}

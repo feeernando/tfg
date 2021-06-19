@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: spark-worker-1
+  name: spark-worker-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: spark-worker-1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/fer_fiware: "true"
+        io.kompose.service: spark-worker-1
+    spec:
+      containers:
+        - env:
+            - name: SPARK_MASTER
+              value: spark://spark-master:7077
+            - name: constraint
+              value: node==spark-master
+          image: bde2020/spark-worker:2.4.4-hadoop2.7
+          name: spark-worker-1
+          ports:
+            - containerPort: 8081
+          resources: {}
+      restartPolicy: Always
+status: {}
