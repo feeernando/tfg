@@ -33,7 +33,7 @@ spec:
           env:
             - name: DRACO_ENDPOINT
               value: draco:9090
-          image: python:3
+          image: python:3.9
           name: python
           resources: {}
           volumeMounts:
