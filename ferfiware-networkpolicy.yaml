@@ -8,8 +8,7 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              io.kompose.network/fer
-              fiware: "true"
+              io.kompose.network/ferfiware: "true"
   podSelector:
     matchLabels:
       io.kompose.network/ferfiware: "true"
