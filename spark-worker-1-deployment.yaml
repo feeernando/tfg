@@ -30,7 +30,7 @@ spec:
               value: spark://spark-master:7077
             - name: constraint
               value: node==spark-master
-          image: bde2020/spark-worker:2.4.4-hadoop2.7
+          image: bde2020/spark-worker:2.4.5-hadoop2.7
           name: spark-worker-1
           ports:
             - containerPort: 8081
