@@ -35,7 +35,7 @@ spec:
               value: mongodb://root:example@mongo:27017/sth_test?authSource=admin
             - name: URL_CB
               value: http://orion:1026/v2/entities/ReqTicketPrediction1/attrs
-          image: web
+          image: feeer98/web
           name: web
           ports:
             - containerPort: 3000
